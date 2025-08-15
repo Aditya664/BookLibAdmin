@@ -1,0 +1,37 @@
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ApiService } from './api.service';
+import { User, UserCreateRequest, UserUpdateRequest } from '../models/user.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UserService {
+  private endpoint = '/users';
+
+  constructor(private apiService: ApiService) {}
+
+  getAllUsers(): Observable<User[]> {
+    return this.apiService.get<User[]>(this.endpoint);
+  }
+
+  getUserById(id: number): Observable<User> {
+    return this.apiService.get<User>(`${this.endpoint}/${id}`);
+  }
+
+  createUser(user: UserCreateRequest): Observable<User> {
+    return this.apiService.post<User>(this.endpoint, user);
+  }
+
+  updateUser(user: UserUpdateRequest): Observable<User> {
+    return this.apiService.put<User>(`${this.endpoint}/${user.id}`, user);
+  }
+
+  deleteUser(id: number): Observable<void> {
+    return this.apiService.delete<void>(`${this.endpoint}/${id}`);
+  }
+
+  toggleUserStatus(id: number): Observable<User> {
+    return this.apiService.put<User>(`${this.endpoint}/${id}/toggle-status`, {});
+  }
+}
