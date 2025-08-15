@@ -1,111 +1,247 @@
 <div class="dashboard-container">
-  <!-- Header Section -->
+  <!-- Enhanced Header Section -->
   <div class="dashboard-header">
     <div class="header-content">
-      <h1 class="dashboard-title">
-        <mat-icon class="title-icon">dashboard</mat-icon>
-        Dashboard Overview
-      </h1>
-      <p class="dashboard-subtitle">Welcome to your library management system</p>
+      <div class="title-section">
+        <h1 class="dashboard-title">
+          <mat-icon class="title-icon">dashboard</mat-icon>
+          Dashboard Overview
+        </h1>
+        <p class="dashboard-subtitle">Welcome to your library management system</p>
+        <div class="breadcrumb">
+          <span>Home</span>
+          <mat-icon>chevron_right</mat-icon>
+          <span class="current">Dashboard</span>
+        </div>
+      </div>
+      <div class="header-stats">
+        <div class="quick-stat">
+          <span class="stat-value">{{ getCurrentTime() | date:'short' }}</span>
+          <span class="stat-label">Last Updated</span>
+        </div>
+      </div>
     </div>
     <div class="header-actions">
+      <button mat-stroked-button class="filter-btn" (click)="toggleFilters()">
+        <mat-icon>filter_list</mat-icon>
+        Filters
+      </button>
       <button mat-raised-button color="primary" class="action-btn" (click)="loadDashboardData()">
         <mat-icon>refresh</mat-icon>
         Refresh Data
       </button>
+      <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-btn">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="exportData()">
+          <mat-icon>download</mat-icon>
+          Export Data
+        </button>
+        <button mat-menu-item (click)="openSettings()">
+          <mat-icon>settings</mat-icon>
+          Settings
+        </button>
+      </mat-menu>
     </div>
   </div>
 
-  <!-- Stats Cards Grid -->
+  <!-- Enhanced Stats Cards Grid -->
   <div class="stats-grid" *ngIf="dashboardStats">
-    <mat-card class="stat-card books-card" elevation="3">
+    <mat-card class="stat-card books-card" elevation="4" (click)="navigateToBooks()">
+      <div class="card-background"></div>
       <div class="stat-icon-wrapper books-icon">
         <mat-icon class="stat-icon">menu_book</mat-icon>
       </div>
       <div class="stat-content">
-        <div class="stat-number">{{ dashboardStats.totalBooks }}</div>
+        <div class="stat-number" [@countAnimation]="dashboardStats.totalBooks">{{ animatedNumbers.totalBooks }}</div>
         <div class="stat-label">Total Books</div>
         <div class="stat-trend positive">
           <mat-icon>trending_up</mat-icon>
-          <span>+12% from last month</span>
+          <span>+{{ getTrendPercentage('books') }}% from last month</span>
+        </div>
+        <div class="stat-actions">
+          <button mat-icon-button class="stat-action-btn">
+            <mat-icon>add</mat-icon>
+          </button>
         </div>
       </div>
     </mat-card>
 
-    <mat-card class="stat-card users-card" elevation="3">
+    <mat-card class="stat-card users-card" elevation="4" (click)="navigateToUsers()">
+      <div class="card-background"></div>
       <div class="stat-icon-wrapper users-icon">
         <mat-icon class="stat-icon">people</mat-icon>
       </div>
       <div class="stat-content">
-        <div class="stat-number">{{ dashboardStats.totalUsers }}</div>
+        <div class="stat-number" [@countAnimation]="dashboardStats.totalUsers">{{ animatedNumbers.totalUsers }}</div>
         <div class="stat-label">Total Users</div>
         <div class="stat-trend positive">
           <mat-icon>trending_up</mat-icon>
-          <span>+8% from last month</span>
+          <span>+{{ getTrendPercentage('users') }}% from last month</span>
+        </div>
+        <div class="stat-actions">
+          <button mat-icon-button class="stat-action-btn">
+            <mat-icon>person_add</mat-icon>
+          </button>
         </div>
       </div>
     </mat-card>
 
-    <mat-card class="stat-card borrowed-card" elevation="3">
+    <mat-card class="stat-card borrowed-card" elevation="4" (click)="navigateToBorrowedBooks()">
+      <div class="card-background"></div>
       <div class="stat-icon-wrapper borrowed-icon">
         <mat-icon class="stat-icon">bookmark</mat-icon>
       </div>
       <div class="stat-content">
-        <div class="stat-number">{{ dashboardStats.totalBorrowedBooks }}</div>
+        <div class="stat-number" [@countAnimation]="dashboardStats.totalBorrowedBooks">{{ animatedNumbers.totalBorrowedBooks }}</div>
         <div class="stat-label">Borrowed Books</div>
-        <div class="stat-trend neutral">
-          <mat-icon>trending_flat</mat-icon>
-          <span>Same as last month</span>
+        <div class="stat-trend" [class]="getBorrowedTrendClass()">
+          <mat-icon>{{ getBorrowedTrendIcon() }}</mat-icon>
+          <span>{{ getBorrowedTrendText() }}</span>
+        </div>
+        <div class="stat-actions">
+          <button mat-icon-button class="stat-action-btn">
+            <mat-icon>visibility</mat-icon>
+          </button>
         </div>
       </div>
     </mat-card>
 
-    <mat-card class="stat-card available-card" elevation="3">
+    <mat-card class="stat-card available-card" elevation="4" (click)="navigateToAvailableBooks()">
+      <div class="card-background"></div>
       <div class="stat-icon-wrapper available-icon">
         <mat-icon class="stat-icon">library_books</mat-icon>
       </div>
       <div class="stat-content">
-        <div class="stat-number">{{ dashboardStats.totalAvailableBooks }}</div>
+        <div class="stat-number" [@countAnimation]="dashboardStats.totalAvailableBooks">{{ animatedNumbers.totalAvailableBooks }}</div>
         <div class="stat-label">Available Books</div>
         <div class="stat-trend positive">
           <mat-icon>trending_up</mat-icon>
-          <span>+5% from last month</span>
+          <span>+{{ getTrendPercentage('available') }}% from last month</span>
+        </div>
+        <div class="stat-actions">
+          <button mat-icon-button class="stat-action-btn">
+            <mat-icon>library_add</mat-icon>
+          </button>
         </div>
       </div>
     </mat-card>
   </div>
 
-  <!-- Recent Activity Section -->
-  <div class="activity-section" *ngIf="dashboardStats?.recentActivity">
-    <mat-card class="activity-card" elevation="2">
-      <mat-card-header class="activity-header">
-        <div class="activity-title">
-          <mat-icon class="activity-icon">history</mat-icon>
-          <span>Recent Activity</span>
-        </div>
-        <button mat-button color="primary" class="view-all-btn">View All</button>
-      </mat-card-header>
-      <mat-card-content class="activity-content">
-        <div class="activity-list">
-          <div class="activity-item" *ngFor="let activity of dashboardStats?.recentActivity || []; let i = index">
-            <div class="activity-avatar">
-              <mat-icon [class]="getActivityIconClass(activity.type)">
-                {{ getActivityIcon(activity.type) }}
-              </mat-icon>
-            </div>
-            <div class="activity-details">
-              <div class="activity-description">{{ activity?.description }}</div>
-              <div class="activity-time">{{ activity?.timestamp | date:'MMM d, y - h:mm a' }}</div>
-            </div>
-            <div class="activity-status">
-              <mat-chip [class]="getActivityChipClass(activity.type)">
-                {{ getActivityStatus(activity.type) }}
-              </mat-chip>
+  <!-- Quick Actions Section -->
+  <div class="quick-actions-section" [@slideInUp]>
+    <h2 class="section-title">
+      <mat-icon>flash_on</mat-icon>
+      Quick Actions
+    </h2>
+    <div class="quick-actions-grid">
+      <button mat-raised-button color="primary" class="quick-action-btn" (click)="quickAddBook()">
+        <mat-icon>add_circle</mat-icon>
+        <span>Add New Book</span>
+      </button>
+      <button mat-raised-button color="accent" class="quick-action-btn" (click)="quickAddUser()">
+        <mat-icon>person_add</mat-icon>
+        <span>Add New User</span>
+      </button>
+      <button mat-stroked-button class="quick-action-btn" (click)="viewReports()">
+        <mat-icon>assessment</mat-icon>
+        <span>View Reports</span>
+      </button>
+      <button mat-stroked-button class="quick-action-btn" (click)="manageGenres()">
+        <mat-icon>category</mat-icon>
+        <span>Manage Genres</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Enhanced Recent Activity Section -->
+  <div class="content-grid">
+    <div class="activity-section" *ngIf="dashboardStats?.recentActivity">
+      <mat-card class="activity-card" elevation="3">
+        <mat-card-header class="activity-header">
+          <div class="activity-title">
+            <mat-icon class="activity-icon">history</mat-icon>
+            <span>Recent Activity</span>
+            <mat-chip class="activity-count">{{ dashboardStats?.recentActivity?.length || 0 }}</mat-chip>
+          </div>
+          <div class="header-actions">
+            <button mat-icon-button (click)="refreshActivity()" matTooltip="Refresh">
+              <mat-icon>refresh</mat-icon>
+            </button>
+            <button mat-button color="primary" class="view-all-btn" (click)="viewAllActivity()">View All</button>
+          </div>
+        </mat-card-header>
+        <mat-card-content class="activity-content">
+          <div class="activity-list" [@staggerAnimation]="dashboardStats?.recentActivity?.length">
+            <div class="activity-item" *ngFor="let activity of dashboardStats?.recentActivity || []; let i = index; trackBy: trackActivity" [@slideInLeft]>
+              <div class="activity-avatar">
+                <mat-icon [class]="getActivityIconClass(activity.type)">
+                  {{ getActivityIcon(activity.type) }}
+                </mat-icon>
+              </div>
+              <div class="activity-details">
+                <div class="activity-description">{{ activity?.description }}</div>
+                <div class="activity-time">{{ getRelativeTime(activity?.timestamp) }}</div>
+              </div>
+              <div class="activity-status">
+                <mat-chip [class]="getActivityChipClass(activity.type)">
+                  {{ getActivityStatus(activity.type) }}
+                </mat-chip>
+              </div>
+              <button mat-icon-button class="activity-menu" [matMenuTriggerFor]="activityMenu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #activityMenu="matMenu">
+                <button mat-menu-item (click)="viewActivityDetails(activity)">
+                  <mat-icon>visibility</mat-icon>
+                  View Details
+                </button>
+                <button mat-menu-item (click)="markAsRead(activity)">
+                  <mat-icon>done</mat-icon>
+                  Mark as Read
+                </button>
+              </mat-menu>
             </div>
           </div>
-        </div>
-      </mat-card-content>
-    </mat-card>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Popular Books Section -->
+    <div class="popular-books-section">
+      <mat-card class="popular-books-card" elevation="3">
+        <mat-card-header>
+          <div class="section-title">
+            <mat-icon>trending_up</mat-icon>
+            <span>Popular Books</span>
+          </div>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="popular-books-list" *ngIf="popularBooks?.length; else noPopularBooks">
+            <div class="popular-book-item" *ngFor="let book of popularBooks; let i = index" [@slideInRight]>
+              <div class="book-rank">{{ i + 1 }}</div>
+              <img [src]="book.image || 'assets/default-book-cover.jpg'" [alt]="book.title" class="book-thumbnail">
+              <div class="book-info">
+                <div class="book-title">{{ book.title }}</div>
+                <div class="book-author">{{ book.author }}</div>
+                <div class="book-rating">
+                  <mat-icon *ngFor="let star of [1,2,3,4,5]" [class.rated]="star <= book.rating">
+                    {{ star <= book.rating ? 'star' : 'star_border' }}
+                  </mat-icon>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ng-template #noPopularBooks>
+            <div class="no-data-mini">
+              <mat-icon>trending_up</mat-icon>
+              <p>No popular books data available</p>
+            </div>
+          </ng-template>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </div>
 
   <!-- Loading State -->
