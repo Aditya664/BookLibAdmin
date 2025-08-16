@@ -33,7 +33,7 @@ import { User, UserRole } from '../../../models/user.model';
 export class UserListComponent implements OnInit {
   users: User[] = [];
   filteredUsers: User[] = [];
-  displayedColumns: string[] = ['userName', 'email', 'fullName', 'roles',  'actions'];
+  displayedColumns: string[] = ['userInfo', 'fullName', 'roles', 'status', 'actions'];
   loading = true;
   searchQuery = '';
 
@@ -102,7 +102,32 @@ export class UserListComponent implements OnInit {
     }
   }
 
+  getRoleClass(role: string): string {
+    switch (role?.toLowerCase()) {
+      case 'admin': return 'admin';
+      case 'user': return 'user';
+      case 'moderator': return 'moderator';
+      default: return '';
+    }
+  }
+
+  getInitials(user: User): string {
+    const firstName = user.firstName || '';
+    const lastName = user.lastName || '';
+    return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+  }
+
   getFullName(user: User): string {
     return `${user.firstName} ${user.lastName}`;
+  }
+
+  openAddUserDialog(): void {
+    // TODO: Implement add user dialog
+    this.snackBar.open('Add user functionality coming soon', 'Close', { duration: 3000 });
+  }
+
+  openEditUserDialog(user: User): void {
+    // TODO: Implement edit user dialog
+    this.snackBar.open('Edit user functionality coming soon', 'Close', { duration: 3000 });
   }
 }
