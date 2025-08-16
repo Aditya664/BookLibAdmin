@@ -13,7 +13,7 @@ export class UserService {
   constructor(private apiService: ApiService) {}
 
   getAllUsers(): Observable<CommonResponse<User[]>> {
-    return this.apiService.get<CommonResponse<User[]>>(this.endpoint);
+    return this.apiService.get<CommonResponse<User[]>>(this.endpoint+"/all");
   }
 
   getUserById(id: number): Observable<User> {
