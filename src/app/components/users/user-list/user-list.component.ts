@@ -71,7 +71,7 @@ export class UserListComponent implements OnInit {
     }
 
     this.filteredUsers = this.users.filter(user =>
-      user.username.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+      user.userName.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
       user.email.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
       user.firstName.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
       user.lastName.toLowerCase().includes(this.searchQuery.toLowerCase())
@@ -80,7 +80,7 @@ export class UserListComponent implements OnInit {
 
 
   deleteUser(user: User): void {
-    if (confirm(`Are you sure you want to delete user "${user.username}"?`)) {
+    if (confirm(`Are you sure you want to delete user "${user.userName}"?`)) {
       this.userService.deleteUser(user.id!).subscribe({
         next: () => {
           this.snackBar.open('User deleted successfully', 'Close', { duration: 3000 });
