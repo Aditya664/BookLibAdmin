@@ -33,7 +33,7 @@ import { User, UserRole } from '../../../models/user.model';
 export class UserListComponent implements OnInit {
   users: User[] = [];
   filteredUsers: User[] = [];
-  displayedColumns: string[] = ['username', 'email', 'fullName', 'role',  'actions'];
+  displayedColumns: string[] = ['userName', 'email', 'fullName', 'roles',  'actions'];
   loading = true;
   searchQuery = '';
 
