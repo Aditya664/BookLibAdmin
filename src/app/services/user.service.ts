@@ -2,17 +2,18 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { User, UserCreateRequest, UserUpdateRequest } from '../models/user.model';
+import { CommonResponse } from '../models/dashboard.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private endpoint = '/users';
+  private endpoint = '/User';
 
   constructor(private apiService: ApiService) {}
 
-  getAllUsers(): Observable<User[]> {
-    return this.apiService.get<User[]>(this.endpoint);
+  getAllUsers(): Observable<CommonResponse<User[]>> {
+    return this.apiService.get<CommonResponse<User[]>>(this.endpoint);
   }
 
   getUserById(id: number): Observable<User> {

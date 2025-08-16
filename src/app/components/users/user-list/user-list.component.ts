@@ -33,7 +33,7 @@ import { User, UserRole } from '../../../models/user.model';
 export class UserListComponent implements OnInit {
   users: User[] = [];
   filteredUsers: User[] = [];
-  displayedColumns: string[] = ['username', 'email', 'fullName', 'role', 'isActive', 'lastLogin', 'actions'];
+  displayedColumns: string[] = ['username', 'email', 'fullName', 'role',  'actions'];
   loading = true;
   searchQuery = '';
 
@@ -50,47 +50,15 @@ export class UserListComponent implements OnInit {
     this.loading = true;
     this.userService.getAllUsers().subscribe({
       next: (users) => {
-        this.users = users;
-        this.filteredUsers = users;
+        this.users = users.data;
+        this.filteredUsers = users.data;
         this.loading = false;
       },
       error: (error) => {
         console.error('Error loading users:', error);
         this.snackBar.open('Failed to load users', 'Close', { duration: 3000 });
         this.loading = false;
-        // Mock data for development
-        this.users = [
-          {
-            id: 1,
-            username: 'admin',
-            email: 'admin@library.com',
-            firstName: 'Admin',
-            lastName: 'User',
-            role: UserRole.ADMIN,
-            isActive: true,
-            lastLogin: new Date()
-          },
-          {
-            id: 2,
-            username: 'librarian1',
-            email: 'librarian@library.com',
-            firstName: 'John',
-            lastName: 'Doe',
-            role: UserRole.LIBRARIAN,
-            isActive: true,
-            lastLogin: new Date(Date.now() - 86400000)
-          },
-          {
-            id: 3,
-            username: 'member1',
-            email: 'member@library.com',
-            firstName: 'Jane',
-            lastName: 'Smith',
-            role: UserRole.MEMBER,
-            isActive: false,
-            lastLogin: new Date(Date.now() - 604800000)
-          }
-        ];
+        this.users = [];
         this.filteredUsers = this.users;
       }
     });
@@ -110,22 +78,6 @@ export class UserListComponent implements OnInit {
     );
   }
 
-  toggleUserStatus(user: User): void {
-    this.userService.toggleUserStatus(user.id!).subscribe({
-      next: (updatedUser) => {
-        const index = this.users.findIndex(u => u.id === user.id);
-        if (index !== -1) {
-          this.users[index] = updatedUser;
-          this.searchUsers();
-        }
-        this.snackBar.open(`User ${updatedUser.isActive ? 'activated' : 'deactivated'}`, 'Close', { duration: 3000 });
-      },
-      error: (error) => {
-        console.error('Error toggling user status:', error);
-        this.snackBar.open('Failed to update user status', 'Close', { duration: 3000 });
-      }
-    });
-  }
 
   deleteUser(user: User): void {
     if (confirm(`Are you sure you want to delete user "${user.username}"?`)) {
@@ -145,8 +97,7 @@ export class UserListComponent implements OnInit {
   getRoleColor(role: UserRole): string {
     switch (role) {
       case UserRole.ADMIN: return 'primary';
-      case UserRole.LIBRARIAN: return 'accent';
-      case UserRole.MEMBER: return 'warn';
+      case UserRole.USER: return 'accent';
       default: return '';
     }
   }

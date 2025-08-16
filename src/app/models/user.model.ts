@@ -5,16 +5,12 @@ export interface User {
   firstName: string;
   lastName: string;
   role: UserRole;
-  isActive: boolean;
-  createdAt?: Date;
-  updatedAt?: Date;
-  lastLogin?: Date;
 }
 
+
 export enum UserRole {
-  ADMIN = 'ADMIN',
-  LIBRARIAN = 'LIBRARIAN',
-  MEMBER = 'MEMBER'
+  ADMIN = 'Admin',
+  USER = 'User',
 }
 
 export interface UserCreateRequest {
