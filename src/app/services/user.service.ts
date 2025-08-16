@@ -16,7 +16,7 @@ export class UserService {
     return this.apiService.get<CommonResponse<User[]>>(this.endpoint+"/all");
   }
 
-  getUserById(id: number): Observable<User> {
+  getUserById(id: string): Observable<User> {
     return this.apiService.get<User>(`${this.endpoint}/${id}`);
   }
 
@@ -28,11 +28,11 @@ export class UserService {
     return this.apiService.put<User>(`${this.endpoint}/${user.id}`, user);
   }
 
-  deleteUser(id: number): Observable<void> {
+  deleteUser(id: string): Observable<void> {
     return this.apiService.delete<void>(`${this.endpoint}/${id}`);
   }
 
-  toggleUserStatus(id: number): Observable<User> {
+  toggleUserStatus(id: string): Observable<User> {
     return this.apiService.put<User>(`${this.endpoint}/${id}/toggle-status`, {});
   }
 }

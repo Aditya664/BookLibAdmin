@@ -28,7 +28,8 @@ import { User, UserRole } from '../../../models/user.model';
     MatSlideToggleModule,
     FormsModule
   ],
-  templateUrl: './user-list.component.html'
+  templateUrl: './user-list.component.html',
+  styleUrls: ['./user-list.component.scss']
 })
 export class UserListComponent implements OnInit {
   users: User[] = [];
@@ -73,8 +74,9 @@ export class UserListComponent implements OnInit {
     this.filteredUsers = this.users.filter(user =>
       user.userName.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
       user.email.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-      user.firstName.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-      user.lastName.toLowerCase().includes(this.searchQuery.toLowerCase())
+      user.fullName.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+      (user.firstName && user.firstName.toLowerCase().includes(this.searchQuery.toLowerCase())) ||
+      (user.lastName && user.lastName.toLowerCase().includes(this.searchQuery.toLowerCase()))
     );
   }
 
@@ -102,8 +104,9 @@ export class UserListComponent implements OnInit {
     }
   }
 
-  getRoleClass(role: string): string {
-    switch (role?.toLowerCase()) {
+  getRoleClass(roles: string[]): string {
+    const primaryRole = roles && roles.length > 0 ? roles[0].toLowerCase() : '';
+    switch (primaryRole) {
       case 'admin': return 'admin';
       case 'user': return 'user';
       case 'moderator': return 'moderator';
@@ -112,13 +115,20 @@ export class UserListComponent implements OnInit {
   }
 
   getInitials(user: User): string {
-    const firstName = user.firstName || '';
-    const lastName = user.lastName || '';
-    return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+    if (user.firstName && user.lastName) {
+      return `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`.toUpperCase();
+    }
+    // Fallback to first two letters of username or email
+    const name = user.userName || user.email;
+    return name.substring(0, 2).toUpperCase();
   }
 
   getFullName(user: User): string {
-    return `${user.firstName} ${user.lastName}`;
+    return user.fullName || `${user.firstName || ''} ${user.lastName || ''}`.trim();
+  }
+
+  getRolesDisplay(roles: string[]): string {
+    return roles && roles.length > 0 ? roles.join(', ') : 'No Role';
   }
 
   openAddUserDialog(): void {

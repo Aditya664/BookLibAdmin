@@ -100,4 +100,11 @@ export class BookService {
   searchBooks(query: string): Observable<Book[]> {
     return this.apiService.get<Book[]>(`${this.endpoint}/search?q=${encodeURIComponent(query)}`);
   }
+
+  saveProgress(bookId: number, currentPage: number, totalPages: number): Observable<any> {
+    return this.apiService.post(`${this.endpoint}/save-progress`, { bookId, currentPage, totalPages });
+  }
+
+  // Start session (when opening book)
+
 }

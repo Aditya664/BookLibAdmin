@@ -1,12 +1,14 @@
 export interface User {
-  id?: number;
+  id?: string;
   userName: string;
   email: string;
-  firstName: string;
-  lastName: string;
-  role: UserRole;
+  firstName?: string;
+  lastName?: string;
+  fullName: string;
+  roles: string[];
+  hasSubscription: boolean;
+  isActive?: boolean;
 }
-
 
 export enum UserRole {
   ADMIN = 'Admin',
