@@ -1,5 +1,5 @@
 {
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "http://freeelib.runasp.net" }
+    { "source": "/api/(.*)", "destination": "http://freeelib.runasp.net/api" }
   ]
 }
