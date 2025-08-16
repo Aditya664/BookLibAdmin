@@ -94,7 +94,7 @@ export class BookService {
   
 
   deleteBook(id: number): Observable<void> {
-    return this.apiService.delete<void>(`${this.endpoint}/${id}`);
+    return this.apiService.delete<void>(`${this.endpoint}+/'deleteBook'/${id}`);
   }
 
   searchBooks(query: string): Observable<Book[]> {
