@@ -26,7 +26,7 @@
 
           <ng-container matColumnDef="fullName">
             <th mat-header-cell *matHeaderCellDef>Full Name</th>
-            <td mat-cell *matCellDef="let user">{{ getFullName(user) }}</td>
+            <td mat-cell *matCellDef="let user">{{ user.fullName }}</td>
           </ng-container>
 
           <ng-container matColumnDef="roles">
