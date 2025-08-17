@@ -5,11 +5,14 @@ export interface CommonResponse<T>{
 }
 
 export interface DashboardStats {
-  totalBooks: number;
   totalUsers: number;
-  totalBorrowedBooks: number;
-  totalAvailableBooks: number;
-  recentActivity: ActivityItem[];
+  totalBooks: number;
+  totalGenres: number;
+  totalReviews: number;
+  totalFavorites: number;
+  totalSubscriptions: number;
+  totalReadingSessions: number;
+  recentActivity?: ActivityItem[];
 }
 
 export interface ActivityItem {

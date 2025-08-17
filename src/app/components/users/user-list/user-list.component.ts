@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatMenuModule } from '@angular/material/menu';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../../services/user.service';
 import { User, UserRole } from '../../../models/user.model';
@@ -26,6 +27,7 @@ import { User, UserRole } from '../../../models/user.model';
     MatFormFieldModule,
     MatChipsModule,
     MatSlideToggleModule,
+    MatMenuModule,
     FormsModule
   ],
   templateUrl: './user-list.component.html',

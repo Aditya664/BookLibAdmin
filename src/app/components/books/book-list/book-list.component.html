@@ -1,4 +1,47 @@
 <div class="book-list-container">
+  <!-- Enhanced Header Section -->
+  <div class="dashboard-header">
+    <div class="header-content">
+      <div class="title-section">
+        <h1 class="dashboard-title">
+          <mat-icon class="title-icon">library_books</mat-icon>
+          Book Management
+        </h1>
+        <p class="dashboard-subtitle">Manage your library's book collection</p>
+        <div class="breadcrumb">
+          <span>Home</span>
+          <mat-icon>chevron_right</mat-icon>
+          <span class="current">Books</span>
+        </div>
+      </div>
+      <div class="header-stats">
+        <div class="quick-stat">
+          <span class="stat-value">{{ filteredBooks.length }}</span>
+          <span class="stat-label">Total Books</span>
+        </div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button mat-stroked-button class="filter-btn" (click)="searchBooks()">
+        <mat-icon>refresh</mat-icon>
+        Refresh
+      </button>
+      <button mat-raised-button color="primary" class="action-btn" (click)="openAddBookDialog()">
+        <mat-icon>add</mat-icon>
+        Add New Book
+      </button>
+      <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-btn">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="searchBooks()">
+          <mat-icon>refresh</mat-icon>
+          Refresh Data
+        </button>
+      </mat-menu>
+    </div>
+  </div>
+
   <mat-card>
     <mat-card-header>
       <mat-card-title>Book Management</mat-card-title>
@@ -8,10 +51,6 @@
           <input matInput [(ngModel)]="searchQuery" (input)="searchBooks()" placeholder="Title, Author, Genre">
           <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
-        <button mat-raised-button color="primary" (click)="openAddBookDialog()">
-          <mat-icon>add</mat-icon>
-          Add Book
-        </button>
       </div>
     </mat-card-header>
     

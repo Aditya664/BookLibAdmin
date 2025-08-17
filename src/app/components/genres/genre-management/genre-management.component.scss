@@ -1,8 +1,24 @@
-.user-management-container {
+.genre-management-container {
   padding: 24px;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
-  min-height: calc(100vh - 120px);
+  min-height: calc(100vh - 64px);
+  
+  mat-card {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+  }
+  
+  mat-card-content {
+    flex: 1;
+    padding: 0;
+  }
 }
 
 // Dashboard header styling to match other pages
@@ -98,111 +114,99 @@
     font-size: 2rem;
     font-weight: 700;
     color: white;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    margin-bottom: 4px;
+    line-height: 1;
   }
   
   .stat-label {
     display: block;
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.8);
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 4px;
   }
 }
 
 .header-actions {
   display: flex;
-  gap: 16px;
   align-items: center;
+  gap: 12px;
   position: relative;
   z-index: 1;
-  flex-wrap: wrap;
-
-  .filter-btn, .action-btn {
-    height: 48px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    border-radius: 12px;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-    
-    mat-icon {
-      margin-right: 8px;
-    }
-  }
-  
-  .filter-btn {
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: white;
-    
-    &:hover {
-      background: rgba(255, 255, 255, 0.25);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    }
-  }
-  
-  .action-btn {
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    color: white;
-    
-    &:hover {
-      background: rgba(255, 255, 255, 0.3);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    }
-  }
-  
-  .menu-btn {
-    width: 48px;
-    height: 48px;
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 12px;
-    color: white;
-    transition: all 0.3s ease;
-    
-    &:hover {
-      background: rgba(255, 255, 255, 0.25);
-      transform: translateY(-2px);
-    }
-  }
 }
 
-// Card styling
-.users-card {
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+.filter-btn {
+  background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
-  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  font-weight: 500;
+  padding: 0 20px;
+  height: 44px;
+  border-radius: 8px;
   transition: all 0.3s ease;
-  
+
   &:hover {
+    background: rgba(255, 255, 255, 0.25);
     transform: translateY(-2px);
-    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.15);
+  }
+
+  mat-icon {
+    margin-right: 8px;
   }
 }
 
-::ng-deep mat-card-header,
-::ng-deep .mat-mdc-card-header {
-  display: flex !important;
-  justify-content: space-between !important;
-  align-items: center !important;
+.action-btn {
+  background: rgba(255, 255, 255, 0.9);
+  color: #667eea;
+  font-weight: 600;
+  padding: 0 24px;
+  height: 44px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  mat-icon {
+    margin-right: 8px;
+  }
+}
+
+.menu-btn {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+}
+
+.genres-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.genres-card mat-card-header {
   padding: 20px 24px !important;
   border-bottom: 1px solid #e2e8f0 !important;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
   color: white !important;
   margin-bottom: 0 !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-  ::ng-deep mat-card-title,
-  ::ng-deep .mat-mdc-card-title {
+  mat-card-title {
     font-size: 24px !important;
     font-weight: 700 !important;
     color: white !important;
@@ -253,34 +257,11 @@
         color: rgba(255, 255, 255, 0.8) !important;
       }
     }
-    
-    ::ng-deep button[mat-raised-button],
-    ::ng-deep .mat-mdc-raised-button {
-      height: 48px !important;
-      font-weight: 600 !important;
-      font-size: 14px !important;
-      text-transform: uppercase !important;
-      letter-spacing: 0.5px !important;
-      border-radius: 8px !important;
-      background: rgba(255, 255, 255, 0.2) !important;
-      color: white !important;
-      border: 1px solid rgba(255, 255, 255, 0.3) !important;
-      backdrop-filter: blur(10px) !important;
-      transition: all 0.3s ease !important;
-      
-      &:hover {
-        background: rgba(255, 255, 255, 0.3) !important;
-        transform: translateY(-1px) !important;
-      }
-      
-      ::ng-deep mat-icon {
-        margin-right: 8px !important;
-        font-size: 20px !important;
-        width: 20px !important;
-        height: 20px !important;
-      }
-    }
   }
+}
+
+.genres-card mat-card-content {
+  padding: 0;
 }
 
 .table-container {
@@ -301,7 +282,7 @@
   }
 }
 
-::ng-deep .users-table,
+::ng-deep .genres-table,
 ::ng-deep .mat-mdc-table {
   width: 100% !important;
   border-collapse: separate !important;
@@ -329,104 +310,6 @@
     vertical-align: middle !important;
     color: #374155 !important;
     font-size: 14px !important;
-  }
-
-  .user-avatar {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    color: white;
-    font-size: 16px;
-    box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
-  }
-
-  .user-info {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-
-  .user-details {
-    .user-name {
-      font-weight: 600;
-      margin-bottom: 4px;
-      color: #1f2937;
-      font-size: 15px;
-    }
-    
-    .user-email {
-      font-size: 13px;
-      color: #6b7280;
-    }
-  }
-
-  .role-chip {
-    padding: 6px 16px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-    white-space: nowrap;
-    display: inline-block;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    
-    &.admin {
-      background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
-      color: #dc2626;
-      border: 1px solid #f87171;
-    }
-    
-    &.user {
-      background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
-      color: #2563eb;
-      border: 1px solid #60a5fa;
-    }
-    
-    &.moderator {
-      background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
-      color: #d97706;
-      border: 1px solid #fbbf24;
-    }
-  }
-
-  .status-indicator {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    
-    .status-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      
-      &.active {
-        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-        box-shadow: 0 2px 4px rgba(16, 185, 129, 0.4);
-      }
-      
-      &.inactive {
-        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-        box-shadow: 0 2px 4px rgba(239, 68, 68, 0.4);
-      }
-    }
-    
-    .status-text {
-      font-size: 13px;
-      font-weight: 600;
-      
-      &.active {
-        color: #059669;
-      }
-      
-      &.inactive {
-        color: #dc2626;
-      }
-    }
   }
 
   ::ng-deep .mat-mdc-icon-button {
@@ -516,56 +399,254 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
-// Responsive adjustments
-@media (max-width: 960px) {
-  .user-list-container {
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 16px;
+
+  mat-icon {
+    font-size: 3rem;
+    width: 3rem;
+    height: 3rem;
+  }
+
+  p {
+    color: #ef4444;
+    margin: 0;
+    text-align: center;
+  }
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.genres-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  
+  ::ng-deep .mat-mdc-header-row {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  }
+  
+  ::ng-deep .mat-mdc-header-cell {
+    font-weight: 700;
+    font-size: 14px;
+    color: #374151;
+    text-align: left;
+    padding: 16px 20px;
+    white-space: nowrap;
+    border-bottom: 2px solid #e2e8f0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  ::ng-deep .mat-mdc-cell {
+    padding: 20px;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+    color: #374155;
+    font-size: 14px;
+  }
+
+  ::ng-deep .mat-mdc-row {
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  ::ng-deep .mat-mdc-icon-button {
+    margin: 0 4px;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+.genre-name {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  mat-icon {
+    color: #667eea;
+    font-size: 1.25rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
+    border-radius: 8px;
+    padding: 8px;
+    box-shadow: 0 2px 4px rgba(102, 126, 234, 0.2);
+  }
+
+  span {
+    font-weight: 600;
+    color: #1f2937;
+    font-size: 15px;
+  }
+}
+
+.books-count {
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  color: #475569;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  border: 1px solid #cbd5e1;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.name-cell {
+  .genre-name {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 500;
+
+    .genre-icon {
+      color: #6366f1;
+      font-size: 1.2rem;
+    }
+  }
+}
+
+.description-cell {
+  .description-text {
+    color: #6b7280;
+    font-style: italic;
+  }
+}
+
+.date-cell {
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.actions-cell {
+  .action-buttons {
+    display: flex;
+    gap: 4px;
+  }
+
+  .edit-btn {
+    color: #059669;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(5, 150, 105, 0.1);
+      transform: scale(1.1);
+    }
+  }
+
+  .delete-btn {
+    color: #dc2626;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(220, 38, 38, 0.1);
+      transform: scale(1.1);
+    }
+  }
+}
+
+.no-data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  text-align: center;
+
+  mat-icon {
+    font-size: 4rem;
+    width: 4rem;
+    height: 4rem;
+    color: #d1d5db;
+    margin-bottom: 16px;
+  }
+
+  p {
+    margin: 0 0 24px 0;
+    color: #6b7280;
+    font-size: 1.1rem;
+  }
+
+  button {
+    mat-icon {
+      margin-right: 8px;
+      font-size: 1.2rem;
+      width: auto;
+      height: auto;
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .genre-management-container {
     padding: 16px;
-    min-height: calc(100vh - 56px);
+  }
 
-    mat-card-header {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 20px;
-      padding: 20px;
+  .header-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
 
-      mat-card-title {
-        font-size: 20px;
-      }
+  .header-actions {
+    justify-content: space-between;
+  }
 
-      .header-actions {
-        width: 100%;
-        flex-direction: column;
-        gap: 16px;
+  .page-title {
+    font-size: 1.5rem;
+  }
 
-        .search-field {
-          width: 100%;
-          min-width: 100%;
-        }
-        
-        button[mat-raised-button] {
-          width: 100%;
-        }
-      }
+  .genres-table {
+    font-size: 0.875rem;
+
+    .mat-mdc-header-cell,
+    .mat-mdc-cell {
+      padding: 12px 8px;
     }
-    
-    .table-container {
-      padding: 0 16px 16px;
+  }
+
+  .empty-state {
+    padding: 40px 20px;
+
+    .empty-icon {
+      font-size: 3rem;
+      width: 3rem;
+      height: 3rem;
     }
-    
-    .users-table {
-      .user-info {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-      }
-      
-      ::ng-deep .mat-mdc-cell {
-        padding: 16px;
-      }
+
+    h3 {
+      font-size: 1.25rem;
     }
   }
 }

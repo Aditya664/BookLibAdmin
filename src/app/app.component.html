@@ -4,7 +4,10 @@
 
 <div class="app-container with-nav" *ngIf="showNavigation">
   <mat-toolbar color="primary" class="app-toolbar">
-    <span>Library Admin Panel</span>
+    <button mat-icon-button (click)="toggleSidenav()" class="menu-toggle" matTooltip="Toggle Menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span class="app-title">Library Admin Panel</span>
     <span class="spacer"></span>
     <div class="user-info" *ngIf="currentUser$ | async as user">
       <!-- <span>{{ user.firstName }} {{ user.lastName }}</span> -->
@@ -15,13 +18,43 @@
   </mat-toolbar>
 
   <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav mode="side" opened class="sidenav">
-      <mat-nav-list>
-        <a mat-list-item *ngFor="let item of menuItems" [routerLink]="item.path" routerLinkActive="active">
-          <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
-          <span matListItemTitle>{{ item.label }}</span>
+    <mat-sidenav 
+      #drawer 
+      [mode]="isHandset ? 'over' : 'side'" 
+      [opened]="sidenavOpened" 
+      class="sidenav"
+      [fixedInViewport]="isHandset"
+      fixedTopGap="64">
+      <div class="sidenav-header">
+        <div class="logo-section">
+          <mat-icon class="logo-icon">library_books</mat-icon>
+          <span class="logo-text" [class.hidden]="!sidenavOpened">BookLib Admin</span>
+        </div>
+        <button mat-icon-button (click)="toggleSidenav()" class="close-btn" matTooltip="Close Menu">
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+      </div>
+      
+      <mat-divider></mat-divider>
+      
+      <mat-nav-list class="nav-list">
+        <a mat-list-item 
+           *ngFor="let item of menuItems" 
+           [routerLink]="item.path" 
+           routerLinkActive="active"
+           (click)="closeSidenavOnMobile()"
+           class="nav-item">
+          <mat-icon matListItemIcon class="nav-icon">{{ item.icon }}</mat-icon>
+          <span matListItemTitle class="nav-label">{{ item.label }}</span>
         </a>
       </mat-nav-list>
+      
+      <div class="sidenav-footer">
+        <mat-divider></mat-divider>
+        <div class="footer-content">
+          <span class="version-text">v1.0.0</span>
+        </div>
+      </div>
     </mat-sidenav>
 
     <mat-sidenav-content class="main-content">

@@ -1,0 +1,125 @@
+<div class="genre-management-container">
+  <!-- Enhanced Header Section -->
+  <div class="dashboard-header">
+    <div class="header-content">
+      <div class="title-section">
+        <h1 class="dashboard-title">
+          <mat-icon class="title-icon">category</mat-icon>
+          Genre Management
+        </h1>
+        <p class="dashboard-subtitle">Manage book genres and categories</p>
+        <div class="breadcrumb">
+          <span>Home</span>
+          <mat-icon>chevron_right</mat-icon>
+          <span class="current">Genres</span>
+        </div>
+      </div>
+      <div class="header-stats">
+        <div class="quick-stat">
+          <span class="stat-value">{{ genres.length }}</span>
+          <span class="stat-label">Total Genres</span>
+        </div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button mat-stroked-button class="filter-btn" (click)="refreshGenres()">
+        <mat-icon>refresh</mat-icon>
+        Refresh
+      </button>
+      <button mat-raised-button color="primary" class="action-btn" (click)="openAddGenreDialog()">
+        <mat-icon>add</mat-icon>
+        Add New Genre
+      </button>
+      <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-btn">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="refreshGenres()">
+          <mat-icon>refresh</mat-icon>
+          Refresh Data
+        </button>
+      </mat-menu>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <mat-card class="genres-card" elevation="3">
+    <mat-card-header>
+      <mat-card-title>Genre Management</mat-card-title>
+      <div class="header-actions">
+        <mat-form-field appearance="outline" class="search-field" *ngIf="genres.length > 0">
+          <mat-label>Search genres...</mat-label>
+          <input matInput placeholder="Genre name or description">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <!-- Loading -->
+      <div class="loading" *ngIf="loading">
+        <mat-icon class="loading-spinner">refresh</mat-icon>
+        <p>Loading genres...</p>
+      </div>
+
+      <!-- Error State -->
+      <div class="error-container" *ngIf="error && !loading">
+        <mat-icon color="warn">error_outline</mat-icon>
+        <p>{{ error }}</p>
+        <button mat-raised-button color="primary" (click)="refreshGenres()">
+          <mat-icon>refresh</mat-icon>
+          Retry
+        </button>
+      </div>
+
+      <!-- Genres Table -->
+      <div class="table-container" *ngIf="!loading && !error">
+        <table mat-table [dataSource]="genres" class="genres-table" *ngIf="genres.length > 0">
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Genre Name</th>
+            <td mat-cell *matCellDef="let genre">
+              <div class="genre-name">
+                <mat-icon>{{'category' }}</mat-icon>
+                <span>{{ genre.name }}</span>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Books Count Column -->
+          <ng-container matColumnDef="booksCount">
+            <th mat-header-cell *matHeaderCellDef>Books</th>
+            <td mat-cell *matCellDef="let genre">
+              <span class="books-count">{{ genre.books?.length || 0 }} books</span>
+            </td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let genre">
+              <button mat-icon-button color="primary" (click)="openEditGenreDialog(genre)" matTooltip="Edit">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteGenre(genre)" matTooltip="Delete">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <!-- Empty State -->
+        <div class="no-data" *ngIf="genres.length === 0">
+          <mat-icon>category</mat-icon>
+          <p>No genres found</p>
+          <button mat-raised-button color="primary" (click)="openAddGenreDialog()">
+            Add First Genre
+          </button>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

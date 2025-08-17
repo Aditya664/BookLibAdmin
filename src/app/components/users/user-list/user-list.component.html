@@ -1,22 +1,69 @@
-<div class="user-list-container">
-  <mat-card>
+<div class="user-management-container">
+  <!-- Enhanced Header Section -->
+  <div class="dashboard-header">
+    <div class="header-content">
+      <div class="title-section">
+        <h1 class="dashboard-title">
+          <mat-icon class="title-icon">people</mat-icon>
+          User Management
+        </h1>
+        <p class="dashboard-subtitle">Manage library users and their accounts</p>
+        <div class="breadcrumb">
+          <span>Home</span>
+          <mat-icon>chevron_right</mat-icon>
+          <span class="current">Users</span>
+        </div>
+      </div>
+      <div class="header-stats">
+        <div class="quick-stat">
+          <span class="stat-value">{{ filteredUsers.length }}</span>
+          <span class="stat-label">Total Users</span>
+        </div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button mat-stroked-button class="filter-btn" (click)="loadUsers()">
+        <mat-icon>refresh</mat-icon>
+        Refresh
+      </button>
+      <button mat-raised-button color="primary" class="action-btn" (click)="openAddUserDialog()">
+        <mat-icon>add</mat-icon>
+        Add New User
+      </button>
+      <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-btn">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="loadUsers()">
+          <mat-icon>refresh</mat-icon>
+          Refresh Data
+        </button>
+      </mat-menu>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <mat-card class="users-card" elevation="3">
     <mat-card-header>
       <mat-card-title>User Management</mat-card-title>
       <div class="header-actions">
-        <mat-form-field appearance="outline" class="search-field">
+        <mat-form-field appearance="outline" class="search-field" *ngIf="users.length > 0">
           <mat-label>Search users...</mat-label>
           <input matInput [(ngModel)]="searchQuery" (input)="searchUsers()" placeholder="Username, Email, Name">
           <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
-        <button mat-raised-button color="primary" (click)="openAddUserDialog()">
-          <mat-icon>add</mat-icon>
-          Add User
-        </button>
       </div>
     </mat-card-header>
     
     <mat-card-content>
-      <div class="table-container">
+      <!-- Loading -->
+      <div class="loading" *ngIf="loading">
+        <mat-icon class="loading-spinner">refresh</mat-icon>
+        <p>Loading users...</p>
+      </div>
+
+      <!-- Users Table -->
+      <div class="table-container" *ngIf="!loading">
         <table mat-table [dataSource]="filteredUsers" class="users-table">
           <!-- User Info -->
           <ng-container matColumnDef="userInfo">
@@ -83,17 +130,13 @@
         </table>
 
         <!-- Empty State -->
-        <div class="no-data" *ngIf="!loading && filteredUsers.length === 0">
+        <div class="no-data" *ngIf="filteredUsers.length === 0">
           <mat-icon>people</mat-icon>
           <p>No users found</p>
           <button mat-raised-button color="primary" (click)="openAddUserDialog()">
+            <mat-icon>add</mat-icon>
             Add First User
           </button>
-        </div>
-
-        <div class="loading" *ngIf="loading">
-          <mat-icon class="loading-spinner">refresh</mat-icon>
-          <p>Loading users...</p>
         </div>
       </div>
     </mat-card-content>

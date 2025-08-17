@@ -12,6 +12,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatMenuModule } from '@angular/material/menu';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -36,6 +37,7 @@ import { BookFormComponent } from '../book-form/book-form.component';
     MatSnackBarModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
+    MatMenuModule,
     RouterModule,
     FormsModule
   ],

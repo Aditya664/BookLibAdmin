@@ -77,18 +77,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
   loading = true;
   error: string | null = null;
   animatedNumbers = {
-    totalBooks: 0,
     totalUsers: 0,
-    totalBorrowedBooks: 0,
-    totalAvailableBooks: 0
+    totalBooks: 0,
+    totalGenres: 0,
+    totalReviews: 0,
+    totalFavorites: 0,
+    totalSubscriptions: 0,
+    totalReadingSessions: 0
   };
   private refreshSubscription?: Subscription;
-  private trendData = {
-    books: 12,
-    users: 8,
-    borrowed: 0,
-    available: 5
-  };
 
   constructor(
     private dashboardService: DashboardService,
@@ -125,10 +122,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
         console.error('Dashboard error:', error);
         // Mock data for development
         this.dashboardStats = {
-          totalBooks: 150,
-          totalUsers: 45,
-          totalBorrowedBooks: 23,
-          totalAvailableBooks: 127,
+          totalUsers: 150,
+          totalBooks: 320,
+          totalGenres: 12,
+          totalReviews: 540,
+          totalFavorites: 250,
+          totalSubscriptions: 45,
+          totalReadingSessions: 820,
           recentActivity: [
             {
               id: 1,
@@ -196,10 +196,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
       }, stepDuration);
     };
 
-    animate(data.totalBooks, this.animatedNumbers.totalBooks, 'totalBooks');
     animate(data.totalUsers, this.animatedNumbers.totalUsers, 'totalUsers');
-    animate(data.totalBorrowedBooks, this.animatedNumbers.totalBorrowedBooks, 'totalBorrowedBooks');
-    animate(data.totalAvailableBooks, this.animatedNumbers.totalAvailableBooks, 'totalAvailableBooks');
+    animate(data.totalBooks, this.animatedNumbers.totalBooks, 'totalBooks');
+    animate(data.totalGenres, this.animatedNumbers.totalGenres, 'totalGenres');
+    animate(data.totalReviews, this.animatedNumbers.totalReviews, 'totalReviews');
+    animate(data.totalFavorites, this.animatedNumbers.totalFavorites, 'totalFavorites');
+    animate(data.totalSubscriptions, this.animatedNumbers.totalSubscriptions, 'totalSubscriptions');
+    animate(data.totalReadingSessions, this.animatedNumbers.totalReadingSessions, 'totalReadingSessions');
   }
 
   // Utility methods
@@ -207,30 +210,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     return new Date();
   }
 
-  getTrendPercentage(type: string): number {
-    return this.trendData[type as keyof typeof this.trendData] || 0;
-  }
-
-  getBorrowedTrendClass(): string {
-    const trend = this.trendData.borrowed;
-    if (trend > 0) return 'positive';
-    if (trend < 0) return 'negative';
-    return 'neutral';
-  }
-
-  getBorrowedTrendIcon(): string {
-    const trend = this.trendData.borrowed;
-    if (trend > 0) return 'trending_up';
-    if (trend < 0) return 'trending_down';
-    return 'trending_flat';
-  }
-
-  getBorrowedTrendText(): string {
-    const trend = this.trendData.borrowed;
-    if (trend > 0) return `+${trend}% from last month`;
-    if (trend < 0) return `${trend}% from last month`;
-    return 'Same as last month';
-  }
 
   getRelativeTime(timestamp?: Date): string {
     if (!timestamp) return 'Unknown time';
@@ -259,12 +238,24 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.router.navigate(['/users']);
   }
 
-  navigateToBorrowedBooks(): void {
-    this.router.navigate(['/books'], { queryParams: { filter: 'borrowed' } });
+  navigateToGenres(): void {
+    this.router.navigate(['/genres']);
   }
 
-  navigateToAvailableBooks(): void {
-    this.router.navigate(['/books'], { queryParams: { filter: 'available' } });
+  navigateToReviews(): void {
+    this.router.navigate(['/reviews']);
+  }
+
+  navigateToFavorites(): void {
+    this.router.navigate(['/favorites']);
+  }
+
+  navigateToSubscriptions(): void {
+    this.router.navigate(['/subscriptions']);
+  }
+
+  navigateToReadingSessions(): void {
+    this.router.navigate(['/reading-sessions']);
   }
 
   // Action methods

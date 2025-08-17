@@ -48,26 +48,6 @@
 
   <!-- Enhanced Stats Cards Grid -->
   <div class="stats-grid" *ngIf="dashboardStats">
-    <mat-card class="stat-card books-card" elevation="4" (click)="navigateToBooks()">
-      <div class="card-background"></div>
-      <div class="stat-icon-wrapper books-icon">
-        <mat-icon class="stat-icon">menu_book</mat-icon>
-      </div>
-      <div class="stat-content">
-        <div class="stat-number" [@countAnimation]="dashboardStats.totalBooks">{{ animatedNumbers.totalBooks }}</div>
-        <div class="stat-label">Total Books</div>
-        <div class="stat-trend positive">
-          <mat-icon>trending_up</mat-icon>
-          <span>+{{ getTrendPercentage('books') }}% from last month</span>
-        </div>
-        <div class="stat-actions">
-          <button mat-icon-button class="stat-action-btn">
-            <mat-icon>add</mat-icon>
-          </button>
-        </div>
-      </div>
-    </mat-card>
-
     <mat-card class="stat-card users-card" elevation="4" (click)="navigateToUsers()">
       <div class="card-background"></div>
       <div class="stat-icon-wrapper users-icon">
@@ -76,10 +56,6 @@
       <div class="stat-content">
         <div class="stat-number" [@countAnimation]="dashboardStats.totalUsers">{{ animatedNumbers.totalUsers }}</div>
         <div class="stat-label">Total Users</div>
-        <div class="stat-trend positive">
-          <mat-icon>trending_up</mat-icon>
-          <span>+{{ getTrendPercentage('users') }}% from last month</span>
-        </div>
         <div class="stat-actions">
           <button mat-icon-button class="stat-action-btn">
             <mat-icon>person_add</mat-icon>
@@ -88,18 +64,46 @@
       </div>
     </mat-card>
 
-    <mat-card class="stat-card borrowed-card" elevation="4" (click)="navigateToBorrowedBooks()">
+    <mat-card class="stat-card books-card" elevation="4" (click)="navigateToBooks()">
       <div class="card-background"></div>
-      <div class="stat-icon-wrapper borrowed-icon">
-        <mat-icon class="stat-icon">bookmark</mat-icon>
+      <div class="stat-icon-wrapper books-icon">
+        <mat-icon class="stat-icon">menu_book</mat-icon>
       </div>
       <div class="stat-content">
-        <div class="stat-number" [@countAnimation]="dashboardStats.totalBorrowedBooks">{{ animatedNumbers.totalBorrowedBooks }}</div>
-        <div class="stat-label">Borrowed Books</div>
-        <div class="stat-trend" [class]="getBorrowedTrendClass()">
-          <mat-icon>{{ getBorrowedTrendIcon() }}</mat-icon>
-          <span>{{ getBorrowedTrendText() }}</span>
+        <div class="stat-number" [@countAnimation]="dashboardStats.totalBooks">{{ animatedNumbers.totalBooks }}</div>
+        <div class="stat-label">Total Books</div>
+        <div class="stat-actions">
+          <button mat-icon-button class="stat-action-btn">
+            <mat-icon>add</mat-icon>
+          </button>
         </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card genres-card" elevation="4" (click)="navigateToGenres()">
+      <div class="card-background"></div>
+      <div class="stat-icon-wrapper genres-icon">
+        <mat-icon class="stat-icon">category</mat-icon>
+      </div>
+      <div class="stat-content">
+        <div class="stat-number" [@countAnimation]="dashboardStats.totalGenres">{{ animatedNumbers.totalGenres }}</div>
+        <div class="stat-label">Total Genres</div>
+        <div class="stat-actions">
+          <button mat-icon-button class="stat-action-btn">
+            <mat-icon>add_circle</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card reviews-card" elevation="4" (click)="navigateToReviews()">
+      <div class="card-background"></div>
+      <div class="stat-icon-wrapper reviews-icon">
+        <mat-icon class="stat-icon">rate_review</mat-icon>
+      </div>
+      <div class="stat-content">
+        <div class="stat-number" [@countAnimation]="dashboardStats.totalReviews">{{ animatedNumbers.totalReviews }}</div>
+        <div class="stat-label">Total Reviews</div>
         <div class="stat-actions">
           <button mat-icon-button class="stat-action-btn">
             <mat-icon>visibility</mat-icon>
@@ -108,21 +112,49 @@
       </div>
     </mat-card>
 
-    <mat-card class="stat-card available-card" elevation="4" (click)="navigateToAvailableBooks()">
+    <mat-card class="stat-card favorites-card" elevation="4" (click)="navigateToFavorites()">
       <div class="card-background"></div>
-      <div class="stat-icon-wrapper available-icon">
-        <mat-icon class="stat-icon">library_books</mat-icon>
+      <div class="stat-icon-wrapper favorites-icon">
+        <mat-icon class="stat-icon">favorite</mat-icon>
       </div>
       <div class="stat-content">
-        <div class="stat-number" [@countAnimation]="dashboardStats.totalAvailableBooks">{{ animatedNumbers.totalAvailableBooks }}</div>
-        <div class="stat-label">Available Books</div>
-        <div class="stat-trend positive">
-          <mat-icon>trending_up</mat-icon>
-          <span>+{{ getTrendPercentage('available') }}% from last month</span>
-        </div>
+        <div class="stat-number" [@countAnimation]="dashboardStats.totalFavorites">{{ animatedNumbers.totalFavorites }}</div>
+        <div class="stat-label">Total Favorites</div>
         <div class="stat-actions">
           <button mat-icon-button class="stat-action-btn">
-            <mat-icon>library_add</mat-icon>
+            <mat-icon>favorite_border</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card subscriptions-card" elevation="4" (click)="navigateToSubscriptions()">
+      <div class="card-background"></div>
+      <div class="stat-icon-wrapper subscriptions-icon">
+        <mat-icon class="stat-icon">subscriptions</mat-icon>
+      </div>
+      <div class="stat-content">
+        <div class="stat-number" [@countAnimation]="dashboardStats.totalSubscriptions">{{ animatedNumbers.totalSubscriptions }}</div>
+        <div class="stat-label">Total Subscriptions</div>
+        <div class="stat-actions">
+          <button mat-icon-button class="stat-action-btn">
+            <mat-icon>add_alert</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card reading-sessions-card" elevation="4" (click)="navigateToReadingSessions()">
+      <div class="card-background"></div>
+      <div class="stat-icon-wrapper reading-sessions-icon">
+        <mat-icon class="stat-icon">auto_stories</mat-icon>
+      </div>
+      <div class="stat-content">
+        <div class="stat-number" [@countAnimation]="dashboardStats.totalReadingSessions">{{ animatedNumbers.totalReadingSessions }}</div>
+        <div class="stat-label">Reading Sessions</div>
+        <div class="stat-actions">
+          <button mat-icon-button class="stat-action-btn">
+            <mat-icon>play_arrow</mat-icon>
           </button>
         </div>
       </div>

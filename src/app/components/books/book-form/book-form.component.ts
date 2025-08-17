@@ -25,9 +25,9 @@ import {
   BookCreateRequest,
   BookUpdateRequest,
   LanguageType,
-  Genre,
 } from '../../../models/book.model';
 import { MatIconModule } from '@angular/material/icon';
+import { Genre } from '../../../models/genre.model';
 
 @Component({
   selector: 'app-book-form',
