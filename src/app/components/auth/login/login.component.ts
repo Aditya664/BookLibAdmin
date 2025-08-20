@@ -42,7 +42,7 @@ export class LoginComponent {
 
   createForm(): FormGroup {
     return this.fb.group({
-      username: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
