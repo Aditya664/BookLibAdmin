@@ -9,10 +9,10 @@
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Email</mat-label>
-          <input matInput type="username" formControlName="username" placeholder="Enter your email">
-          <mat-icon matSuffix>Username</mat-icon>
-          <mat-error *ngIf="loginForm.get('username')?.invalid && loginForm.get('email')?.touched">
-            {{ getErrorMessage('username') }}
+          <input matInput type="email" formControlName="email" placeholder="Enter your email">
+          <mat-icon matSuffix>Email</mat-icon>
+          <mat-error *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+            {{ getErrorMessage('email') }}
           </mat-error>
         </mat-form-field>
 
